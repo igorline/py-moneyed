@@ -337,7 +337,7 @@ _sign(DEFAULT, moneyed.ZWL, prefix='Z$')
 
 _sign('en_US', moneyed.USD, prefix='$')
 _sign('en_UK', moneyed.GBP, prefix='£')
-_sign('ru_RU', moneyed.RUB, prefix=' руб.')
+_sign('ru_RU', moneyed.RUB, suffix=' руб.')
 _sign('sv_SE', moneyed.SEK, prefix=' kr')
 _sign('pl_PL', moneyed.PLN, suffix=' zł')
 _sign('de_DE', moneyed.EUR, suffix=' €')
