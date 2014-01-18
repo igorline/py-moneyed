@@ -56,7 +56,7 @@ class CurrencyFormatter(object):
             return self.formatting_definitions.get(DEFAULT)
 
     def format(self, money, include_symbol=True, locale=DEFAULT,
-               decimal_places=None, rounding_method=None):
+               decimal_places=None, rounding_places=None, rounding_method=None):
         locale = locale.upper()
         code = money.currency.code.upper()
         prefix, suffix = self.get_sign_definition(code, locale)
@@ -69,8 +69,15 @@ class CurrencyFormatter(object):
             # TODO: Use individual defaults for each currency
             decimal_places = 2
 
-        q = Decimal(10) ** -decimal_places  # 2 places --> '0.01'
-        quantized = money.amount.quantize(q, rounding_method)
+        if rounding_places is None:
+            q = Decimal(10) ** -decimal_places  # 2 places --> '0.01'
+            quantized = money.amount.quantize(q, rounding_method)
+
+        else:
+            decimal_places = 0
+            q = Decimal(10) ** rounding_places
+            quantized = Decimal(money.amount / q).quantize(1, rounding_method) * q
+
         negative, digits, e = quantized.as_tuple()
 
         result = []
